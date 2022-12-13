@@ -20,10 +20,19 @@ Git의 Repository 구조는 크게 세가지로 구성되어있다.
 
 이때, 1 → 2에서 가는 명령이 add이고, 2 → 3으로 가는 명령이 commit이다.
 
+당연하겠지만, 뒤로 가는 명령 (reset, pull)도 존재한다.
 
-## git 사용 전 설정
+### git 사용 전 주의사항
+1. 현재 위치를 잘 확인한다.
+2. 리포지토리 안에 리포지토리를 만들지 않는다. (git init을 한 곳안에 하위 폴더를 만들고 그 하위 폴더에서 git init을 하지 않는다.)
+3. home(~) 디렉토리에서 init 하지 않는다. → 2번과도 같은 이유이다.
+4. git을 잘 쓸줄 모르면 github에서 직접 수정하지 않는다.
+
+
+## git 시스템 관련
 ---
-### 이름 설정
+
+### 이름 / 이메일 설정 (git 사용 전 설정 필요)
 1. 이름을 설정한다.
    ```
    $ git config --global user.name "name"
@@ -34,10 +43,26 @@ Git의 Repository 구조는 크게 세가지로 구성되어있다.
    $ git config --global user.email "email@gmail.com"
    ```
 
+### status
+현재 git의 상태를 나타낸다. 현재 스테이징 / 커밋된 파일이 나타나 push가 필요한 파일을 알 수 있다.
 
-## 로컬저장소 생성 / 해제
+#### 사용법
+```
+$ git status
+```
+
+### log
+커밋 히스토리를 조회한다. 빠져나오고 싶지만 프롬프트 `$`가 나타나지 않는 경우 `Q`를 누르면 빠져나올 수 있다.
+
+#### 사용법
+```
+$ git log
+```
+
+
+## 로컬저장소 버전 업데이트
 ---
-### 생성
+### 로컬저장소 생성
 현재 디렉토리를 로컬 저장소로 만든다.(.git 폴더 생성)  
 이걸 해야 본격적으로 git을 사용할 수 있다.
 
@@ -46,7 +71,7 @@ Git의 Repository 구조는 크게 세가지로 구성되어있다.
 $ git init
 ```
 
-### 해제
+### 로컬저장소 해제
 .git 디렉토리를 삭제하면 해당 디렉토리의 로컬저장소가 해제된다.
 
 #### 사용법
@@ -55,68 +80,49 @@ $ rm -rf .git
 ```
 
 
-## status
----
-### 정의
-현재 git의 상태를 나타낸다.
-
-### 사용법
-```
-$ git status
-```
-
-
-## add
----
-### 정의
+### add
 특정 파일을 stage에 올린다.
 
-### 사용법
+#### 사용법
 ```
 $ git add a.txt
 ```
 
 
-## commit
----
-### 정의
+### commit
 스테이징된 파일을 최종 확정한다.
 
-### 사용법
+#### 사용법
 ```
 $ git commit a.txt -m '변경내용'
 ```
 
 
-## reset
----
-### 정의
+### reset
 스테이징된 파일을 되돌린다. 
 
-### 옵션
+#### 옵션
 - reset 옵션
   - -soft : index 보존(add한 상태, staged 상태), 워킹 디렉터리의 파일 보존. 즉 모두 보존.
   - -mixed : index 취소(add하기 전 상태, unstaged 상태), 워킹 디렉터리의 파일 보존 (기본 옵션)
   - -hard : index 취소(add하기 전 상태, unstaged 상태), 워킹 디렉터리의 파일 삭제. 즉 모두 취소.
 
-### 사용법
+#### 사용법
 ```
 # git reset a.txt
 ```
 
 
-## restore
----
-### 정의
+### restore
 특정 커밋으로 되돌리거나 unstaging한다.
 
-### 사용법
+#### 사용법
 ```
 $ git restore a.txt
 ```
 
 
-## 리포지토리 연결 / 갱신 / 내려받기 (remote, push, pull, clone)
+## 깃허브 리포지토리 연결 / 갱신 / 내려받기 (remote, push, pull, clone)
 ---
 ### remote
 git remote add `<name>` `<URL>`의 형태로 사용되며, URL(리포지토리)과 name을 매핑한다.
@@ -135,7 +141,7 @@ $ git push origin master
 ```
 
 ### clone
-로컬저장소에 아무것도 없을때 (.git 폴더), 깃허브 리포지토리로부터 파일을 내려받는다. 
+로컬저장소에 **아무것도 없을때** (.git 폴더), 깃허브 리포지토리로부터 파일을 내려받는다. 
 
 #### 사용법
 ```
@@ -143,7 +149,7 @@ $ git clone https://github.com/CatSaveTheWorld/Daily_study.git
 ```
 
 ### pull
-깃허브 리포지토리로부터 갱신된 내용을 내려받는다. 
+깃허브 리포지토리로부터 **갱신된 내용**을 내려받는다. 
 
 #### 사용법
 ```
@@ -215,7 +221,6 @@ hint: See the 'Note about fast-forwards' in 'git push --help' for details.
 ```
 $ git push origin +master
 ```
-
 
 
 ### 참고
