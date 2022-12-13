@@ -57,7 +57,7 @@ $ rm -rf .git
 
 ## status
 ---
-## 정의
+### 정의
 현재 git의 상태를 나타낸다.
 
 ### 사용법
@@ -116,7 +116,7 @@ $ git restore a.txt
 ```
 
 
-## 리포지토리 연결
+## 리포지토리 연결 / 갱신 / 내려받기 (remote, push, pull, clone)
 ---
 ### remote
 git remote add `<name>` `<URL>`의 형태로 사용되며, URL(리포지토리)과 name을 매핑한다.
@@ -132,6 +132,22 @@ git push `<name>` `<브랜치명>`의 형태로 사용되며, 이 작업을 해�
 #### 사용법
 ```
 $ git push origin master
+```
+
+### clone
+로컬저장소에 아무것도 없을때 (.git 폴더), 깃허브 리포지토리로부터 파일을 내려받는다. 
+
+#### 사용법
+```
+$ git clone https://github.com/CatSaveTheWorld/Daily_study.git
+```
+
+### pull
+깃허브 리포지토리로부터 갱신된 내용을 내려받는다. 
+
+#### 사용법
+```
+$ git pull origin master
 ```
 
 
@@ -179,7 +195,8 @@ $ git config --global core.autocrlf true
 
 <br>
 
-### push 중 Reject 에러 발생 시
+### error: failed to push some refs to 에러 발생 시
+github에 내 Local 에 없는 파일이 있고, 내 파일을 push 하면 발생하는 오류이다.
 
 ```
 To https://github.com/CatSaveTheWorld/Daily_study.git
@@ -190,6 +207,13 @@ hint: not have locally. This is usually caused by another repository pushing
 hint: to the same ref. You may want to first integrate the remote changes
 hint: (e.g., 'git pull ...') before pushing again.
 hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+```
+
+#### 해결법
+`maaster` 앞에 `+`를 주면 강제 실행된다.
+
+```
+$ git push origin +master
 ```
 
 
