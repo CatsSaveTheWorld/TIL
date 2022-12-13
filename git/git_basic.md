@@ -1,6 +1,6 @@
 # git
 ## 기초
----
+
 Git의 Repository 구조는 크게 세가지로 구성되어있다.
 ```
 작업폴더(Working directory) > 인덱스(Staging Area) > 저장소(Head -Repository) 
@@ -8,6 +8,7 @@ Git의 Repository 구조는 크게 세가지로 구성되어있다.
 우리가 작업하는 폴더를 `작업트리(Working directory)` 라고 부르며 commit을 실행하기 전에 작업트리와 저장소 사이에 존재하는 가상의 준비 영역(Staging Area)을 `인덱스(Index)`라고 한다.
 
 저장소에 commit하기 위해서 먼저 추가(Untracked files) 및 변경(Modified files) 하고자 하는 파일을 먼저 `인덱스에 기록(Stage)`하고 이후 스테이징된 목록만 최종적으로 commit 명령어에 의해 저장소에 공개하게 됩니다.
+
 
 ### 쉬운 설명
 영화 촬영에 비교하여 설명한다.
@@ -22,11 +23,13 @@ Git의 Repository 구조는 크게 세가지로 구성되어있다.
 
 당연하겠지만, 뒤로 가는 명령 (reset, pull)도 존재한다.
 
+
 ### git 사용 전 주의사항
 1. 현재 위치를 잘 확인한다.
 2. 리포지토리 안에 리포지토리를 만들지 않는다. (git init을 한 곳안에 하위 폴더를 만들고 그 하위 폴더에서 git init을 하지 않는다.)
 3. home(~) 디렉토리에서 init 하지 않는다. → 2번과도 같은 이유이다.
 4. git을 잘 쓸줄 모르면(브랜치 개념이 없으면) github에서 직접 수정하지 않는다.
+
 
 ### git 사용 중 추천사항
 1. 커밋 메시지는 짧지만 내용을 담을 것.
@@ -34,7 +37,6 @@ Git의 Repository 구조는 크게 세가지로 구성되어있다.
 
 
 ## git 시스템 관련
----
 
 ### 이름 / 이메일 설정 (git 사용 전 설정 필요)
 1. 이름을 설정한다.
@@ -75,7 +77,7 @@ $ git log
 
 
 ## 로컬저장소 버전 업데이트
----
+
 ### 로컬저장소 생성
 현재 디렉토리를 로컬 저장소로 만든다.(.git 폴더 생성)  
 이걸 해야 본격적으로 git을 사용할 수 있다.
@@ -137,7 +139,7 @@ $ git restore a.txt
 
 
 ## 깃허브 리포지토리 연결 / 갱신 / 내려받기 (remote, push, pull, clone)
----
+
 ### remote
 git remote add `<name>` `<URL>`의 형태로 사용되며, URL(리포지토리)과 name을 매핑한다.
 
@@ -173,7 +175,7 @@ $ git pull origin master
 
 
 ## 에러
----
+
 ### fatal: bad object HEAD
 
 해결법
