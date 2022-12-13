@@ -9,7 +9,7 @@ Git의 Repository 구조는 크게 세가지로 구성되어있다.
 
 저장소에 commit하기 위해서 먼저 추가(Untracked files) 및 변경(Modified files) 하고자 하는 파일을 먼저 `인덱스에 기록(Stage)`하고 이후 스테이징된 목록만 최종적으로 commit 명령어에 의해 저장소에 공개하게 됩니다.
 
-#### 쉬운 설명
+### 쉬운 설명
 영화 촬영에 비교하여 설명한다.
 
 영화를 촬영하려면 3가지 공간이 필요하다.
@@ -28,6 +28,7 @@ Git의 Repository 구조는 크게 세가지로 구성되어있다.
    ```
    $ git config --global user.name "name"
    ```
+
 2. 이메일 주소를 설정한다. (G메일 권장)
    ```
    $ git config --global user.email "email@gmail.com"
@@ -37,7 +38,7 @@ Git의 Repository 구조는 크게 세가지로 구성되어있다.
 ## init
 ---
 ### 정의
-현재 디렉토리를 로컬 저장소로 만든다. 이걸 Initialize시켜야 본격적으로 git을 사용할 수 있다.
+현재 디렉토리를 로컬 저장소로 만든다. 이걸 해야 본격적으로 git을 사용할 수 있다.
 
 ### 사용법
 ```
@@ -121,7 +122,7 @@ $ git restore a.txt
 ### fatal: bad object HEAD
 
 해결법
-1. .git 디렉토리를 삭제하고 init을 다시 설정한다.
+1. .git 디렉토리를 삭제하고 init을 다시 생성한다. (git init)
 2. VScode를 재시작하여 소스 제어에 아무것도 출력되지 않는 현상을 해결한다.
 
 
@@ -140,7 +141,8 @@ warning: in the working copy of 'a.txt', LF will be replaced by CRLF the next ti
 한마디로 줄 바꿈
 
 OS마다 줄 바꿈에 대한 문자열이 다르기 때문에 git에서 어느 쪽을 선택해야 할지 경고 메시지를 띄워 준 것이다.
-</br></br>
+
+<br>
 
 **해결법**
 
@@ -149,7 +151,6 @@ OS마다 줄 바꿈에 대한 문자열이 다르기 때문에 git에서 어느 
 ```
 $ git config --global core.autocrlf true
 ```
-
 
 
 
