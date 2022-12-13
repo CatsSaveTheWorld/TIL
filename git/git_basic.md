@@ -26,7 +26,11 @@ Git의 Repository 구조는 크게 세가지로 구성되어있다.
 1. 현재 위치를 잘 확인한다.
 2. 리포지토리 안에 리포지토리를 만들지 않는다. (git init을 한 곳안에 하위 폴더를 만들고 그 하위 폴더에서 git init을 하지 않는다.)
 3. home(~) 디렉토리에서 init 하지 않는다. → 2번과도 같은 이유이다.
-4. git을 잘 쓸줄 모르면 github에서 직접 수정하지 않는다.
+4. git을 잘 쓸줄 모르면(브랜치 개념이 없으면) github에서 직접 수정하지 않는다.
+
+### git 사용 중 추천사항
+1. 커밋 메시지는 짧지만 내용을 담을 것.
+2. 모든 Repo(프로젝트)는 README.md, 파일을 만들 것.
 
 
 ## git 시스템 관련
@@ -36,12 +40,22 @@ Git의 Repository 구조는 크게 세가지로 구성되어있다.
 1. 이름을 설정한다.
    ```
    $ git config --global user.name "name"
+   $ git config user.name
    ```
 
 2. 이메일 주소를 설정한다. (G메일 권장)
    ```
    $ git config --global user.email "email@gmail.com"
+   $ git config user.email
    ```
+
+### config 확인
+git의 config 설정을 확인한다. 빠져나오고 싶지만 프롬프트 `$`가 나타나지 않는 경우 `Q`를 누르면 빠져나올 수 있다.
+
+#### 사용법
+```
+$ git config --list
+```
 
 ### status
 현재 git의 상태를 나타낸다. 현재 스테이징 / 커밋된 파일이 나타나 push가 필요한 파일을 알 수 있다.
@@ -52,7 +66,7 @@ $ git status
 ```
 
 ### log
-커밋 히스토리를 조회한다. 빠져나오고 싶지만 프롬프트 `$`가 나타나지 않는 경우 `Q`를 누르면 빠져나올 수 있다.
+커밋 히스토리를 조회한다. config 확인과 마찬가지로 빠져나오고 싶으면 `Q`를 누른다.
 
 #### 사용법
 ```
@@ -94,7 +108,7 @@ $ git add a.txt
 
 #### 사용법
 ```
-$ git commit a.txt -m '변경내용'
+$ git commit a.txt -m '변경 메시지'
 ```
 
 
