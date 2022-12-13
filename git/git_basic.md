@@ -30,7 +30,7 @@ Git의 Repository 구조는 크게 세가지로 구성되어있다.
 
 ### git 사용 중 추천사항
 1. 커밋 메시지는 짧지만 내용을 담을 것.
-2. 모든 Repo(프로젝트)는 README.md, 파일을 만들 것.
+2. 모든 Repo(프로젝트)는 README.md, .gitingnore 파일을 만들 것.
 
 
 ## git 시스템 관련
