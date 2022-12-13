@@ -35,23 +35,21 @@ Git의 Repository 구조는 크게 세가지로 구성되어있다.
    ```
 
 
-## init
+## 로컬저장소 생성 / 해제
 ---
-### 정의
-현재 디렉토리를 로컬 저장소로 만든다. 이걸 해야 본격적으로 git을 사용할 수 있다.
+### 생성
+현재 디렉토리를 로컬 저장소로 만든다.(.git 폴더 생성)  
+이걸 해야 본격적으로 git을 사용할 수 있다.
 
-### 사용법
+#### 사용법
 ```
 $ git init
 ```
 
-
-## 로컬저장소 해제
----
-### 정의
+### 해제
 .git 디렉토리를 삭제하면 해당 디렉토리의 로컬저장소가 해제된다.
 
-### 사용법
+#### 사용법
 ```
 $ rm -rf .git
 ```
@@ -117,6 +115,27 @@ $ git commit a.txt -m '변경내용'
 $ git restore a.txt
 ```
 
+
+## 리포지토리 연결
+---
+### remote
+git remote add `<name>` `<URL>`의 형태로 사용되며, URL(리포지토리)과 name을 매핑한다.
+
+#### 사용법
+```
+$ git remote add origin https://github.com/CatSaveTheWorld/Daily_study.git
+```
+
+### push
+git push `<name>` `<브랜치명>`의 형태로 사용되며, 이 작업을 해야 비로소 커밋한 내용이 리포지토리에 올라간다.
+
+#### 사용법
+```
+$ git push origin master
+```
+
+
+
 ## 에러
 ---
 ### fatal: bad object HEAD
@@ -151,6 +170,12 @@ OS마다 줄 바꿈에 대한 문자열이 다르기 때문에 git에서 어느 
 ```
 $ git config --global core.autocrlf true
 ```
+
+<br>
+
+### localhost에 연결할 수 없습니다.
+`git log`를 통해 푸시 이력을 확인해보고, 리포지토리에 잘 올라와 있는지 확인한다.
+어차피 리포지토리에만 잘 올라가면 되기 때문.
 
 
 
