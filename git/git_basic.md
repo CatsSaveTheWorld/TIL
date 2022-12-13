@@ -177,6 +177,21 @@ $ git config --global core.autocrlf true
 `git log`를 통해 푸시 이력을 확인해보고, 리포지토리에 잘 올라와 있는지 확인한다.
 어차피 리포지토리에만 잘 올라가면 되기 때문.
 
+<br>
+
+### push 중 Reject 에러 발생 시
+
+```
+To https://github.com/CatSaveTheWorld/Daily_study.git
+ ! [rejected]        master -> master (fetch first)
+error: failed to push some refs to 'https://github.com/CatSaveTheWorld/Daily_study.git'
+hint: Updates were rejected because the remote contains work that you do
+hint: not have locally. This is usually caused by another repository pushing
+hint: to the same ref. You may want to first integrate the remote changes
+hint: (e.g., 'git pull ...') before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+```
+
 
 
 ### 참고
