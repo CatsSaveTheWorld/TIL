@@ -1,4 +1,4 @@
-# Daily_study
+# TIL
 **매일, 꾸준히**
 
 git과 markdown을 처음 배우고 학습한 내용을 정리한 프로젝트입니다.
