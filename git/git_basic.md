@@ -141,13 +141,24 @@ $ git restore a.txt
 
 커밋된 파일들을 깃허브 리포지토리에 갱신하거나, 갱신된 깃헙 리포지토리의 내용들을 로컬저장소에 내려받을 수 있다.
 
+### branch
+브랜치를 생성한다.
+
+#### 사용법
+master자리에 각 이름을 넣어 사용한다.
+
+```
+$ git branch -M <master>
+```
+
 ### remote
-git remote add `<name>` `<URL>`의 형태로 사용되며, URL(리포지토리)과 name을 매핑한다.
+git remote add `<name>` `<URL>`의 형태로 사용되며, URL(리포지토리)과 name을 매핑하거나 삭제한다.
 
 #### 사용법
 ```
-$ git remote add origin https://github.com/CatSaveTheWorld/Daily_study.git
-$ git remote -v   # 등록된 원격 저장소 확인
+$ git remote add <origin> https://github.com/CatSaveTheWorld/Daily_study.git
+$ git remote -v         # 등록된 원격 저장소 확인
+$ git remote rm <origin>  # 원격 저장소 삭제
 ```
 
 ### push
