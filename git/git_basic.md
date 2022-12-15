@@ -51,13 +51,17 @@ Git의 Repository 구조는 크게 세가지로 구성되어있다.
    $ git config user.email
    ```
 
-### config 확인
+### config
 git의 config 설정을 확인한다. 빠져나오고 싶지만 프롬프트 `$`가 나타나지 않는 경우 `Q`를 누르면 빠져나올 수 있다.
 
 #### 사용법
-```
-$ git config --list
-```
+|옵션|설명|예시|
+|-|-|-|
+|--list|config 리스트를 출력한다.|`$ git config --list`|
+|--list|config에 이름을 등록한다.|`$ git config --global user.name 'name'`|
+|--list|config에 등록된 이름을 출력한다.|`$ git config --user.name`|
+|--list|config에 이메일을 등록한다.|`$ git config --global user.email 'email@gmail.com'`|
+|--list|config에 등록된 이메일을 출력한다.|`$ git config --user.email`|
 
 ### status
 현재 git의 상태를 나타낸다. 현재 스테이징 / 커밋된 파일이 나타나 push가 필요한 파일을 알 수 있다.
