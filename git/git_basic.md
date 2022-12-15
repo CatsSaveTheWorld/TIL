@@ -12,6 +12,7 @@ Git의 Repository 구조는 크게 세가지로 구성되어있다.
 .gitignore 파일 생성 시 https://www.toptal.com/developers/gitignore 사이트를 이용하면 편하게 생성할 수 있다. 사용법은 windows, python, Django 같은 단어들을 개별적으로 검색해서 추가하고 생성버튼을 누르면 된다.
 
 ### 쉬운 설명
+
 영화 촬영에 비교하여 설명한다.
 
 영화를 촬영하려면 3가지 공간이 필요하다.
@@ -152,7 +153,7 @@ $ git branch -M <master>
 ```
 
 ### remote
-git remote add `<name>` `<URL>`의 형태로 사용되며, URL(리포지토리)과 name을 매핑하거나 삭제한다.
+원격 저장소를 생성한다. git remote add `<name>` `<URL>`의 형태로 사용되며, URL(리포지토리)과 name(원격 저장소)을 매핑하거나 삭제한다.
 
 #### 사용법
 ```
