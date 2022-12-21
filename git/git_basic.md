@@ -148,11 +148,12 @@ $ git restore a.txt
 master자리에 각 이름을 넣어 사용한다.
 
 ```
-$ git branch -M <master>
+$ git branch                # 생성된 브랜치명 확인
+$ git branch -M <브랜치명>   # 브랜치 생성
 ```
 
 ### remote
-git remote add `<name>` `<URL>`의 형태로 사용되며, URL(리포지토리)과 name을 매핑하거나 삭제한다.
+git remote add `<원격저장소 이름>` `<URL>`의 형태로 사용되며, URL(리포지토리)과 원격저장소 이름을 매핑하거나 삭제한다.
 
 #### 사용법
 ```
