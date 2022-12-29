@@ -1,10 +1,3 @@
-#%%
-import os
-import sys
-
-sys.stdin = open()
-os.getcwd()
-#%%
 '''
 input.txt
 첫줄 : 스위치 갯수
@@ -19,6 +12,61 @@ input.txt
 가장 많은 스위치를 포함하는 구간을 찾아서, 그 구간에 속한 스위치의 상태를 모두 바꾼다.
 '''
 
+import sys
+
+sys.stdin = open('input.txt')
+
+N = int(input())
+
+switches = list(map(int, input().split()))
+student_cnt = int(input())
+
+for _ in range(student_cnt):
+    gender, num = map(int, input().split())
+
+    # 남자 => num의 배수 스위치를 다 바꿈.
+    if gender == 1:
+        i = 1
+        idx = num - 1
+        while idx < N:
+            switches[idx] = 0 if switches[idx] else 1
+            # 혹은
+            # switches[idx] ^= 1
+            i += 1
+            idx = (num * i) - 1
+    # 여자 => num은 바꾸고, 좌우대칭이면 바꿈.
+    else:
+        switches[idx] ^= 1
+        side = 1
+
+        while 0 <= (idx - side) and (idx + side) < N:
+            left = switches[idx - side]
+            right = switches[idx + side]
+
+        if left != right:
+            break
+        else:
+            switches[idx - side] ^= 1
+            switches[idx + side] ^= 1
+            side += 1
+for part_no in range(N // 20 + 1):
+    start = 20 * part_no
+
+'''
+^ : XOR 연산
+다르면 1, 같으면 0 반환
+
+예시)
+3 ^ 4 >> 7
+3 = 011(2)
+4 = 100(2)
+
+011(2) + 100(2) = 111(2) => 7
+'''
+
+
+
+'''
 infile = open("input.txt", 'r', encoding='utf-8')
 infile_list = list(map(str, infile))
 
@@ -68,41 +116,6 @@ for idx, line in enumerate(infile_list):
 print(curr_switch_list)
 
 
-#%%
-infile = open("input.txt", 'r', encoding='utf-8')
-infile_list = list(map(str, infile))
-
-# ['8', '0 1 0 1 0 0 0 1', '2', '1 3', '2 3']
-for idx, line in enumerate(infile_list):
-    if '\n' in line:
-        line = line.replace('\n', '')
-        infile_list[idx] = line
-
-count_switch = infile_list.pop(0)   # '8'
-curr_switch_list = infile_list.pop(0).split() # ['0', '1', '0', '1', '0', '0', '0', '1']
-count_student = infile_list.pop(0)  # '2'
-
-
-print(count_switch)
-print(curr_switch_list)
-print(count_student)
-print(infile_list)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#%%
 count_switch = int(input())                 # 8
 curr_switch_list = list(input().split(' ')) # ['0', '1', '0', '1', '0', '0', '0', '1']
 count_student = int(input())                # 2
@@ -143,18 +156,7 @@ for idx, line in enumerate(infile_list):
                 sym_idx += 1
                 break
 print(curr_switch_list)
-
-#%%
-
+'''
 
 
 
-#%%
-
-
-
-
-
-
-
-# %%
