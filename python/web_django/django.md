@@ -158,3 +158,21 @@ app들은 새로 생성될때마다 `INSTALLED_APPS`에 추가해야 한다.
 4. App 마다 html 파일 이름이 겹칠경우 django에서 제대로 인식하지 못함
 5. app/ > templates/ > app/ > html 파일들 방식으로 구분
 6. 사용자 입력을 받아보자
+
+그 외 정리
+- POST 방식으로 데이터 전송 시 csrf 토큰을 반드시 사용해야함. (안하면 브라우저에서 차단, 자세한 건 하단 코드 참조.)
+- 사용자에게 입력받은 값은 아래처럼 전송 (request는 메소드 생성시 필수적으로 생성하는 매개변수)
+  
+```HTML
+<form action="{% url 'data:user_output' %}" method='POST'>
+    {% csrf_token %}
+    <input type="text" name='username'>
+    <input type="password" name='password'>
+```
+```python
+context = {
+        'f': f,
+        'username' : request.POST['username'],
+        'password' : request.POST['password'],
+    }
+```
