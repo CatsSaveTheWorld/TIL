@@ -40,10 +40,11 @@ Project라 써져 있는 큰 건물이 Django에서 `django-admin startproject �
 설명
 1. 위 건물에서 저 수문장1이라고 적혀있는 urls.py가 최초로 url을 받는다. 
 2. url에 포함된 앱 종류에 따라 각각의 앱 urls.py로 보낸다.
-3. 각 앱의 urls.py에서는 view.py에 정의된 각종 함수들(로직)을 반환한다.
-4. view.py에는 urls.py에서 호출된 메소드에 따라 template에 정의된 HTML파일을 내보낸다.
+3. 각 앱의 urls.py에서는 view.py에 정의된 각종 함수들(로직)에 따라 HTML파일을 내보낸다.
+4. view.py에는 urls.py에서 호출된 메소드에 따라 template에 정의된 HTML파일을 내보내는 로직을 기술한다.
 
-코드 예시
+
+#### 각 파일 별 코드 예시
 ```python
 # 수문장1 (Project의 urls.py)
 from django.contrib import admin
@@ -56,7 +57,7 @@ urlpatterns = [
 ]
 ```
 ```python
-# urls.py
+# 각 앱의 urls.py
 # URL 구성 맨 앞에 'review/'는 이미 master url에서 검사가 끝남.
 urlpatterns = [
     # 패턴 '(review/)index/'가 요청으로 들어온다면, 
@@ -146,8 +147,151 @@ app들은 새로 생성될때마다 `INSTALLED_APPS`에 추가해야 한다.
 
 여기까지 했다면 사전준비는 끝난다.
 
-### 실습시작
+### 실습 시작
+Django의 각 주요 파일들(urls.py, views.py, templates 등)은 서로 유기적으로 연결되어 있으며, 이 연결들은 장고가 뒤에서 열심히 해주고 있다. 각 파일들의 역할을 알아보자.
 
+### urls.py
+실습의 처음은 먼저 수문장1에 해당되는 프로젝트 디렉토리의 urls.py로 각 url에 따라 분배하는 것이다.
+
+예를 들어, https://~뭐시기~/review/index 로 온 것은 review.urls.py로 보내서 나머지 index를 처리하게 하고,
+
+https://~뭐시기~/data/hello 로 온 것은 data.urls.py로 보낸 다음, 나머지 hello를 처리하게끔 구성해야 한다.
+
+이를 코드로 나타내면 아래와 같다.
+
+```python
+# TEMPLATE_VIEW Project의 urls.py
+from django.contrib import admin
+from django.urls import path, include
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('review/', include('review.urls')),
+    path('data/', include('data.urls')),
+]
+
+# review 앱의 urls.py
+from django.urls import path
+from data.views import *
+
+# 변수명 반드시 app_name
+app_name = 'review'
+
+# URL 구성 맨 앞에 'review/'는 이미 master url에서 검사가 끝남.
+urlpatterns = [
+    # 패턴 '(review/)index/'가 요청으로 들어온다면, 
+    path('index/', index, name='index'),
+    path('hello/', hello, name='hello'),
+    path('user_input', user_input, name='user_input`')
+]
+
+# data 앱의 urls.py
+from django.urls import path
+from data.views import *
+
+app_name = 'data'
+
+urlpatterns = [
+    path('index/', index, name='index'),
+
+    # data/hello/<name>/ => Variable Routing
+    path('hello/<str:name>/', hello, name='hello'),
+    # hello/neo => 안녕 neo,
+    # hello/andy => 안녕 andy,
+
+    path('user_input/', user_input, name='user_input'),
+    path('user_output/', user_output, name='user_output'),
+]
+```
+뭔가 잔뜩 있어서 보기 힘들지만, 아래의 표를 보면 이해에 도움이 된다.
+
+|메소드|파라미터|설명|
+|-|-|-|
+|path|str <br> method_object <br> name(*optional)|str: 처리를 보낼 앱의 종류를 뜻한다. <br> method_object: 파라미터 str에 따라 처리를 달리할 메소드를 뜻한다. <br> name: URL에 짓는 이름이다. 이걸 하면 템플릿을 포함한 Django 어디에서나 명확하게 참조가 가능하다.
+|include|str|str에 해당되는 앱의 urls.py에 URL을 보낸다. 보통 path()와 같이 쓰인다.|
+
+정리하면, 요청이 들어온 url을 프로젝트 디렉토리의 **urls.py을 통해 각 앱의 urls.py로 보내고**,
+각 앱의 urls.py에 정의된 path 메소드에 따라 path 메소드의 인자값에 대응되는 **메소드를 호출하여 HTML파일을 반환**한다고 보면 된다.
+
+### views.py
+처리의 핵심이다. urls.py가 각 url을 로직에 맞게 이동시키는 **도로** 정도의 역할을 한다면, views.py는 url 요청이 들어왔을때, 구체적으로 어떤 로직에 따라 수행할지를 결정한다.
+
+```python
+# data.urls.py
+from data.views import *
+
+path('index/', index, name='index'),
+path('hello/<str:name>/', hello, name='hello'),
+
+
+# data.views.py
+def index(request):
+    return render(request, 'data/index.html')
+
+def hello(request, name):
+    context = {
+        'name' : name,
+    }
+    return render(request, 'data/hello.html', context)
+```
+
+위 코드를 보자.
+
+data.urls.py 부분을 보면 URL 요청이 index/로 들어오면 index 메소드를 실행한다고 되어 있다. 여기서 index 메소드가 views.py에 기술되어 있다.
+
+또다른 예를 보자, URL 요청이 `hello/사용자 입력값`의 형태로 들어오면 hello 메소드를 실행한다고 되어 있다. hello 메소드 또한 views.py 파일에 기술되어 있는 것을 확인할 수 있다.
+
+views.py의 메소드 부분을 정리하면 아래와 같다.
+
+|메소드|설명|
+|-|-|
+|render|HTML파일을 렌더링한다. 즉, HTML파일을 클라이언트에게 반환한다.|
+|HttpResponse|문자 그대로 HTTP프로토콜로 응답을 보낸다. <br> HttpResponse(data, content_type)의 형태로 사용한다. (잘 사용안함)|
+
+### Templates
+HTML파일을 모아놓은 문서이다.
+
+`python manage.py startapp 앱이름` 명령으로 처음 앱을 생성하면 곧바로 `mkdir templates`로 템플릿 폴더를 생성한다고 위에서 언급했는데, 그게 이거다.
+
+views.py에서 render() 메소드로 HTML파일을 응답할때, **장고는 가장 먼저 해당 앱의 templates 폴더를 참조한다.**
+
+#### master_templates
+HTML파일에서 반복되는 부분을 재사용하기 위해 미리 기술해놓은 HTML파일을 모아놓은 폴더이다.
+
+프로젝트 생성 시 가장 먼저 생성하는 템플릿 폴더 중 하나이다.
+
+아래 코드를 통해 바로 알 수 있다.
+```HTML
+<!-- base.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% block content %}
+
+    {% endblock content %}
+</body>
+</html>
+
+
+<!-- hello.html -->
+{% include 'base.html' %}
+
+{% block content %}
+
+    <h1>안녕, {{ name }}</h1>
+
+{% endblock content %}
+```
+
+body 부분의 {% block content %} ~ {% endblock content %} 사이에 각 HTML파일 별 내용이 들어가는 것을 알 수 있다.
+
+이런식으로 반복을 줄여서 코드의 재사용성을 높일 수 있다.
 
 
 
