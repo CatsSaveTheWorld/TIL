@@ -294,6 +294,91 @@ body 부분의 {% block content %} ~ {% endblock content %} 사이에 각 HTML�
 이런식으로 반복을 줄여서 코드의 재사용성을 높일 수 있다.
 
 
+### 사용자 입력값을 받을때
+![img](./user_input_%EB%A9%94%EC%9D%B8%ED%99%94%EB%A9%B4.PNG)
+
+위 사진처럼 HTML의 input 태그를 써서 사용자 입력값을 받아 로직을 수행 후, 다시 반환해야 할 때는 어떻게 할까?
+
+아래 코드를 보자.
+```python
+# data.urls.py 
+from django.urls import path
+from data.views import *
+
+# 중요, 이게 없으면 views.py에서 render()메소드 사용 시 HTML파일 위치를 못찾는다.
+# 변수 이름은 반드시 app_name으로 고정.
+app_name = 'data'   
+
+urlpatterns = [
+    path('index/', index, name='index'),
+
+    # data/hello/<name>/ => Variable Routing
+    path('hello/<str:name>/', hello, name='hello'),
+    # hello/neo => 안녕 neo,
+    # hello/andy => 안녕 andy,
+
+    path('user_input/', user_input, name='user_input'),
+    path('user_output/', user_output, name='user_output'),
+]
+```
+```python
+# data.views.py
+def user_input(request):
+    return render(request, 'data/user_input.html')
+
+def user_output(request):
+    cel = {
+        'cel' : request.POST['cel'],
+    }
+    c = int(cel['cel'])
+    f = c * 1.8 + 32
+
+    context = {
+        'f': f,
+        'username' : request.POST['username'],
+        'password' : request.POST['password'],
+    }
+    return render(request, 'data/user_output.html', context)
+```
+```HTML
+<!-- data/templates/user_input.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <h1>User Input</h1>
+
+    {% comment %}
+    아래 요약
+    1. form 태그에서 method='POST' 방식으로 넘기려면 csrf 토큰이 있어야됨.
+    2. input태그 사용 시 name 다 붙일 것.
+    {% endcomment %}
+    <form action="{% url 'data:user_output' %}" method='POST'>
+        {% csrf_token %}
+        <input type="text" name='username'>
+        <input type="password" name='password'>
+
+        <div>
+            <label for="cel">섭씨: </label>
+            <input id="cel" type="number" name='cel'>
+        </div>
+
+        <input type="submit">
+    </form>
+
+{% endblock content %}
+```
+HTML의 `form`태그를 사용한다. `form`태그와  `input`태그를 사용하여 입력 부분을 만든다. 아래는 위 코드에서 사용한 HTML태그 표
+
+|태그|설명|
+|-|-|
+|form|action: 입력값을 어떤 HTML파일에 표시할지를 결정한다. <br> method: 전송방식을 선택한다. 대표적으로 GET방식과 POST방식이 있다.|
+|input|type: 여러가지 종류가 있으며 각 인자 별로 브라우저에 출력되는 형태가 다르다. (text, password, number, email) 등등.. <br> name: 해당 입력값을 참조할 이름을 설정한다. 이건 꼭 해줘야한다.|
+
+위 코드에서 중요한 부분은 바로 csrf 토큰인데, form태그에서 method를 POST방식으로 할 경우, 반드시 csrf 토큰을 부여해야 한다. => `{% csrf_token %}` 
+
+이게 없으면 브라우저에서 피싱으로 간주하고 출력을 막아버린다.
+
 
 ## 23-01-05 강의 핵심 요약
 1. 어제와 동일한 URL => View => Template
