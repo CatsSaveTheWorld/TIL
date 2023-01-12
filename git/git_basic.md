@@ -59,8 +59,8 @@ git의 config 설정을 확인한다. 빠져나오고 싶지만 프롬프트 `$`
 |-|-|-|
 |--list|config 리스트를 출력한다.|`$ git config --list`|
 |--list|config에 이름을 등록한다.|`$ git config --global user.name 'name'`|
-|--list|config에 등록된 이름을 출력한다.|`$ git config --user.name`|
 |--list|config에 이메일을 등록한다.|`$ git config --global user.email 'email@gmail.com'`|
+|--list|config에 등록된 이름을 출력한다.|`$ git config --user.name`|
 |--list|config에 등록된 이메일을 출력한다.|`$ git config --user.email`|
 
 ### status
@@ -158,11 +158,7 @@ $ git branch -M <브랜치명>   # 브랜치 생성
 ```
 
 ### remote
-<<<<<<< HEAD
 원격 저장소를 생성한다. git remote add `<name>` `<URL>`의 형태로 사용되며, URL(리포지토리)과 name(원격 저장소)을 매핑하거나 삭제한다.
-=======
-git remote add `<원격저장소 이름>` `<URL>`의 형태로 사용되며, URL(리포지토리)과 원격저장소 이름을 매핑하거나 삭제한다.
->>>>>>> 62bda85cbfaabc454c4494ca893603c5d3351db1
 
 #### 사용법
 ```
