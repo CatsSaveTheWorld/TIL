@@ -48,7 +48,8 @@ $ deactivate
 
 
 ## 2023-01-09 수업내용
-```$ mkdir MTV
+```t
+$ mkdir MTV
 $ cd MTV
 $ python -m venv venv  # 독립 환경 생성
 $ touch .gitignore  # => https://gitignore.io 에서 "python" "django" "venv" 입력하고 내용 복붙
@@ -67,4 +68,5 @@ $ django-admin startproject mtv .
 $ code . (vscode 로 열기)
 
 # 만약 추가 설치한 패키지들이 있다면
-$ pip freeze > requirements.txt```
+$ pip freeze > requirements.txt
+```
