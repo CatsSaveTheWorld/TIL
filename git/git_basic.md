@@ -77,6 +77,8 @@ $ git status
 #### 사용법
 ```
 $ git log
+$ git log --oneline
+$ git log --oneline --graph   # 깃 commit 로그를 자세히 출력한다. (그래프 포함)
 ```
 
 
@@ -106,6 +108,15 @@ $ rm -rf .git
 #### 사용법
 ```
 $ git add a.txt
+$ git add .
+```
+
+#### 스테이징된 파일 되돌리기
+`git rm --cached <file>...` 명령을 사용하여 스테이징된 파일을 되돌린다.
+
+##### 사용법
+```
+$ git rm --cached a.txt
 ```
 
 
@@ -114,7 +125,8 @@ $ git add a.txt
 
 #### 사용법
 ```
-$ git commit a.txt -m '변경 메시지'
+$ git commit -m a.txt '변경 메시지'
+$ git commit -a -m a.txt '변경 메시지'    # add와 commit을 한번에 한다.
 ```
 
 
@@ -126,12 +138,13 @@ $ git commit a.txt -m '변경 메시지'
   - -soft : index 보존(add한 상태, staged 상태), 워킹 디렉터리의 파일 보존. 즉 모두 보존.
   - -mixed : index 취소(add하기 전 상태, unstaged 상태), 워킹 디렉터리의 파일 보존 (기본 옵션)
   - -hard : index 취소(add하기 전 상태, unstaged 상태), 워킹 디렉터리의 파일 삭제. 즉 모두 취소.
+  <!-- TODO : HEAD 내용 추가 필요 -->
+  - HEAD : 추가 필요
 
 #### 사용법
 ```
 # git reset a.txt
 ```
-
 
 ### restore
 특정 커밋으로 되돌리거나 unstaging한다.
@@ -141,13 +154,21 @@ $ git commit a.txt -m '변경 메시지'
 $ git restore a.txt
 ```
 
+## 브랜치(branch)
 
-## 깃허브 리포지토리 연결 / 갱신 / 내려받기 (remote, push, pull, clone)
+### 개념
+![img](./브랜치.png)
+이름 그대로 **가지**라는 의미이다. 첫 브랜치는 자동으로 master라는 이름으로 시작되며, 후술된 명령을 통해 브랜치를 생성하고, 포인터를 변경하는 등 제어가 가능하다.
 
-커밋된 파일들을 깃허브 리포지토리에 갱신하거나, 갱신된 깃헙 리포지토리의 내용들을 로컬저장소에 내려받을 수 있다.
+그림 해설
+|명령 OR 기호|의미|
+|-|-|
+|commit|위에서 설명한 그 commit 맞다. 커밋할 때마다 저 원이 하나씩 생긴다.|
+|붉은색 체크|하단의 후술된 포인터(HEAD)이다. 현재 작업중인 브랜치를 의미한다.|
+|merge|브랜치를 병합한다. 그림에 나와있는 병합의 종류는 Fast Forward(FF)병합이다.|
 
 ### branch
-브랜치를 생성한다.
+브랜치를 생성, 삭제, 조회한다.
 
 #### 사용법
 master자리에 각 이름을 넣어 사용한다.
@@ -155,7 +176,35 @@ master자리에 각 이름을 넣어 사용한다.
 ```
 $ git branch                # 생성된 브랜치명 확인
 $ git branch -M <브랜치명>   # 브랜치 생성
+$ git branch -a <브랜치명>   # 브랜치 삭제
 ```
+
+### HEAD(포인터) 변경
+생성된 브랜치를 가리키는 **포인터(HEAD)**를 변경한다.
+
+#### 사용법
+
+```
+$ git switch new_branch       # 구버전 명령어
+$ git switch -c new_branch    # b2 브랜치가 없으면 만들면서 스위치
+$ git checkout new_branch     # 신버전 명령어 (switch와 동일)
+$ git branch -v               # 생성된 브랜치명 자세히 확인
+```
+
+### Merge
+브랜치를 병합한다.
+
+#### 사용법
+```
+$ git merge new_branch
+$ git log --oneline --graph   # 깃 commit 로그를 자세히 출력한다. (그래프 포함)
+```
+
+
+## 깃허브 리포지토리 연결 / 갱신 / 내려받기 (remote, push, pull, clone)
+
+커밋된 파일들을 깃허브 리포지토리에 갱신하거나, 갱신된 깃헙 리포지토리의 내용들을 로컬저장소에 내려받을 수 있다.
+
 
 ### remote
 원격 저장소를 생성한다. git remote add `<name>` `<URL>`의 형태로 사용되며, URL(리포지토리)과 name(원격 저장소)을 매핑하거나 삭제한다.
