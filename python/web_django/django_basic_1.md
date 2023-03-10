@@ -249,7 +249,7 @@ views.py의 메소드 부분을 정리하면 아래와 같다.
 |HttpResponse|문자 그대로 HTTP프로토콜로 응답을 보낸다. <br> HttpResponse(data, content_type)의 형태로 사용한다. (잘 사용안함)|
 
 ### Templates
-HTML파일을 모아놓은 문서이다.
+HTML파일을 모아놓은 폴더이다.
 
 `python manage.py startapp 앱이름` 명령으로 처음 앱을 생성하면 곧바로 `mkdir templates`로 템플릿 폴더를 생성한다고 위에서 언급했는데, 그게 이거다.
 
@@ -381,12 +381,25 @@ HTML의 `form`태그를 사용한다. `form`태그와  `input`태그를 사용�
 
 
 ## 23-01-05 강의 핵심 요약
+오늘 핵심 요약
 1. 어제와 동일한 URL => View => Template
 2. 앞으로 urls.py 에서 app_name = 'APP_NAME' 과 path('', views.func, name='PATTERN_NAME') 설정하기
 3. 템플릿에서 {% url 'APP_NAME:PATTERN_NAME' %} 으로 링크 생성 가능
 4. App 마다 html 파일 이름이 겹칠경우 django에서 제대로 인식하지 못함
-5. app/ > templates/ > app/ > html 파일들 방식으로 구분
-6. 사용자 입력을 받아보자
+    4.1. app/ > templates/ > app/ > html 파일들 방식으로 구분
+5. 사용자 입력을 받아보자
+    5.1. Variable Routing
+        5.1.1. url pattern 에서 'hello/<str:name>/' 식으로 원하는 부분 변수화 가능
+        5.1.2. 해당 URL과 매칭된 View 함수에서 def hello(request, name): 으로 값 접근 가능
+    5.2. Form & Input
+        5.2.1 총 두가지 요청으로 구성됨! 입력창 받는 요청 / 데이터 제출하는 요청
+        5.2.2 <form action="URL" method="GET / POST"> 메서드는 선택가능
+        5.2.3 GET 은 입력내용이 URL에 다 나옴
+        5.2.4 POST 는 나오지 않지만 {% csrf_token %} 을 필요로 함
+        5.2.5 View 함수의 기본 인자 request 에서 넘어온 입력 데이터 접근가능
+        5.2.6 GET 요청의 데이터는 request.GET['key']
+        5.2.7 POST 요청의 데이터는 request.POST['key'] 로 접근
+
 
 그 외 정리
 - POST 방식으로 데이터 전송 시 csrf 토큰을 반드시 사용해야함. (안하면 브라우저에서 차단, 자세한 건 하단 코드 참조.)

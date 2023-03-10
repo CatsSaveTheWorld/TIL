@@ -5,6 +5,7 @@
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/venv" />
     </content>
+    <content url="file://$USER_HOME$/github/Peaceful_Secondary_Kingdom" />
     <orderEntry type="jdk" jdkName="Python 3.10 (venv)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
