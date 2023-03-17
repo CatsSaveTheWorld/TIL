@@ -41,6 +41,7 @@
 - 굵게 할때 : Ctrl + B / * 두 개로 감싸기 (**문자**)
 - 기울일 때 : Ctrl + I / * 한 개로 감싸기 (*문자*)
 - 따로 강조 : 백틱 문자 (``)로 감싸기      (`문자`)
+- 취소선 : 물결로(~) 감싸기              (~~문자~~)
 
 ## 블럭 강조
 
@@ -48,23 +49,23 @@
 ### 표
 파이프 (|)로 구분하여 테이블 헤더를 생성
 
-|명령어|설명|예시|
-|-|-|-|
-|`mkdir`|디렉토리 생성|$ mkdir test1|
-|`touch`|파일 생성|$ touch test1.txt|
-|`rm`|파일이나 디렉토리 삭제|$ rm test1.txt <br> $ rm -rf test1| # <br> 으로 개행
-|`pwd`|현재 디렉토리 위치 출력|$ pwd|
-|`ls`|현재 디렉토리의 파일 출력|$ ls -ltr <br> $ ls -a <br> $ ll|
-|`ps`|현재 실행중인 프로세스 출력|$ ps|
-|`cd`|디렉토리 이동|$ cd /root/home <br> $ cd / <br> $ cd ~ <br> $ cd -|
-|`find`|파일이나 디렉토리 위치를 탐색|$ find -name test1.txt|
-|`chmod`|파일이나 디렉토리의 읽기/쓰기/실행 권한을 변경|$ chmod 755 test1.txt|
-|`chown`|파일이나 디렉토리의 소유권을 변경|$ chown aaa:bbb test1.txt|
-|`cat`|파일의 내용을 출력|$ cat test1.txt <br> $ cat -n test1.txt|
-|`yum`|패키지 설치/제거 도구|$ sudo yum install mysql-server -y|
-|`systemctl`|서비스 제어|$ systemctl [start, stop, enable, disable, status, reload] httpd| # 대괄호 단어 중 택 1
-|`clear`|터미널 비우기|$ clear|
-|`ipconfig`|네트워크 정보 표시|$ ipconfig <br> $ ipconfig -all|
+| 명령어      | 설명                                           | 예시                                                             |
+| ----------- | ---------------------------------------------- | ---------------------------------------------------------------- |
+| `mkdir`     | 디렉토리 생성                                  | $ mkdir test1                                                    |
+| `touch`     | 파일 생성                                      | $ touch test1.txt                                                |
+| `rm`        | 파일이나 디렉토리 삭제                         | $ rm test1.txt <br> $ rm -rf test1                               | # <br> 으로 개행      |
+| `pwd`       | 현재 디렉토리 위치 출력                        | $ pwd                                                            |
+| `ls`        | 현재 디렉토리의 파일 출력                      | $ ls -ltr <br> $ ls -a <br> $ ll                                 |
+| `ps`        | 현재 실행중인 프로세스 출력                    | $ ps                                                             |
+| `cd`        | 디렉토리 이동                                  | $ cd /root/home <br> $ cd / <br> $ cd ~ <br> $ cd -              |
+| `find`      | 파일이나 디렉토리 위치를 탐색                  | $ find -name test1.txt                                           |
+| `chmod`     | 파일이나 디렉토리의 읽기/쓰기/실행 권한을 변경 | $ chmod 755 test1.txt                                            |
+| `chown`     | 파일이나 디렉토리의 소유권을 변경              | $ chown aaa:bbb test1.txt                                        |
+| `cat`       | 파일의 내용을 출력                             | $ cat test1.txt <br> $ cat -n test1.txt                          |
+| `yum`       | 패키지 설치/제거 도구                          | $ sudo yum install mysql-server -y                               |
+| `systemctl` | 서비스 제어                                    | $ systemctl [start, stop, enable, disable, status, reload] httpd | # 대괄호 단어 중 택 1 |
+| `clear`     | 터미널 비우기                                  | $ clear                                                          |
+| `ipconfig`  | 네트워크 정보 표시                             | $ ipconfig <br> $ ipconfig -all                                  |
 
 
 ### 코드
