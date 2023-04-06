@@ -55,13 +55,13 @@ Git의 Repository 구조는 크게 세가지로 구성되어있다.
 git의 config 설정을 확인한다. 빠져나오고 싶지만 프롬프트 `$`가 나타나지 않는 경우 `Q`를 누르면 빠져나올 수 있다.
 
 #### 사용법
-|옵션|설명|예시|
-|-|-|-|
-|--list|config 리스트를 출력한다.|`$ git config --list`|
-|--list|config에 이름을 등록한다.|`$ git config --global user.name 'name'`|
-|--list|config에 이메일을 등록한다.|`$ git config --global user.email 'email@gmail.com'`|
-|--list|config에 등록된 이름을 출력한다.|`$ git config --user.name`|
-|--list|config에 등록된 이메일을 출력한다.|`$ git config --user.email`|
+| 옵션   | 설명                               | 예시                                                 |
+| ------ | ---------------------------------- | ---------------------------------------------------- |
+| --list | config 리스트를 출력한다.          | `$ git config --list`                                |
+| --list | config에 이름을 등록한다.          | `$ git config --global user.name 'name'`             |
+| --list | config에 이메일을 등록한다.        | `$ git config --global user.email 'email@gmail.com'` |
+| --list | config에 등록된 이름을 출력한다.   | `$ git config --user.name`                           |
+| --list | config에 등록된 이메일을 출력한다. | `$ git config --user.email`                          |
 
 ### status
 현재 git의 상태를 나타낸다. 현재 스테이징 / 커밋된 파일이 나타나 push가 필요한 파일을 알 수 있다.
@@ -135,15 +135,17 @@ $ git commit -a -m a.txt '변경 메시지'    # add와 commit을 한번에 한�
 
 #### 옵션
 - reset 옵션
-  - -soft : index 보존(add한 상태, staged 상태), 워킹 디렉터리의 파일 보존. 즉 모두 보존.
-  - -mixed : index 취소(add하기 전 상태, unstaged 상태), 워킹 디렉터리의 파일 보존 (기본 옵션)
-  - -hard : index 취소(add하기 전 상태, unstaged 상태), 워킹 디렉터리의 파일 삭제. 즉 모두 취소.
+  - --soft : index 보존(add한 상태, staged 상태), 워킹 디렉터리의 파일 보존. 즉 모두 보존.
+  - --mixed : index 취소(add하기 전 상태, unstaged 상태), 워킹 디렉터리의 파일 보존 (기본 옵션)
+  - --hard : index 취소(add하기 전 상태, unstaged 상태), 워킹 디렉터리의 파일 삭제. 즉 모두 취소.
   <!-- TODO : HEAD 내용 추가 필요 -->
   - HEAD : 추가 필요
 
+명령에 필요한 커밋 해시태그는 `git log` 입력 후, `commit` 옆에 있는 해시태그를 사용하면 된다.
+
 #### 사용법
 ```
-# git reset a.txt
+$ git reset --hard 30ccdae58f4d86s
 ```
 
 ### restore
@@ -161,11 +163,11 @@ $ git restore a.txt
 이름 그대로 **가지**라는 의미이다. 첫 브랜치는 자동으로 master라는 이름으로 시작되며, 후술된 명령을 통해 브랜치를 생성하고, 포인터를 변경하는 등 제어가 가능하다.
 
 그림 해설
-|명령 OR 기호|의미|
-|-|-|
-|commit|위에서 설명한 그 commit 맞다. 커밋할 때마다 저 원이 하나씩 생긴다.|
-|붉은색 체크|하단의 후술된 포인터(HEAD)이다. 현재 작업중인 브랜치를 의미한다.|
-|merge|브랜치를 병합한다. 그림에 나와있는 병합의 종류는 Fast Forward(FF)병합이다.|
+| 명령 OR 기호 | 의미                                                                       |
+| ------------ | -------------------------------------------------------------------------- |
+| commit       | 위에서 설명한 그 commit 맞다. 커밋할 때마다 저 원이 하나씩 생긴다.         |
+| 붉은색 체크  | 하단의 후술된 포인터(HEAD)이다. 현재 작업중인 브랜치를 의미한다.           |
+| merge        | 브랜치를 병합한다. 그림에 나와있는 병합의 종류는 Fast Forward(FF)병합이다. |
 
 ### branch
 브랜치를 생성, 삭제, 조회한다.
@@ -199,11 +201,11 @@ $ git branch -v               # 생성된 브랜치명 자세히 확인
 2. Automatic Merge
 3. CONFLICT => Manual Commit
 
-|시나리오 종류|설명|
-|-|-|
-|Fast Forward(FF)|브랜치 개념의 그림과 같은 상황이다. 병합을 원하는 분기의 커밋수만 차이날때 적용된다.|
-|Automatic Merge|FF 시나리오에서 자기자신(분기)에도 커밋이 일어났지만, 병합 대상 분기의 내용과 겹치는게 없을때 발생한다. <br> 이 경우에도 FF와 같이 사용자가 특별히 수정해야할 사항은 없다.|
-|CONFLICT|병합이 될 두 분기의 커밋수도 차이나고, 그 커밋에서 겹치는 내용이 존재할 때 발생한다. 이 경우, git이 개입할 수 없어 병합 조건을 사용자에게 정하게 한다. <br> 조건은 아래와 같이 네 가지 경우의 수가 존재한다. <br> - income 분기(병합되어질)의 내용만 merge 한다. <br> - 병합대상 분기의 내용만 merge한다. <br> - 두 분기의 내용을 전부 포함시킨다. <br> - 추가요망<!-- TODO : 분기 내용 추가. -->|
+| 시나리오 종류    | 설명                                                                                                                                                                                                                                                                                                                                                                                              |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Fast Forward(FF) | 브랜치 개념의 그림과 같은 상황이다. 병합을 원하는 분기의 커밋수만 차이날때 적용된다.                                                                                                                                                                                                                                                                                                              |
+| Automatic Merge  | FF 시나리오에서 자기자신(분기)에도 커밋이 일어났지만, 병합 대상 분기의 내용과 겹치는게 없을때 발생한다. <br> 이 경우에도 FF와 같이 사용자가 특별히 수정해야할 사항은 없다.                                                                                                                                                                                                                        |
+| CONFLICT         | 병합이 될 두 분기의 커밋수도 차이나고, 그 커밋에서 겹치는 내용이 존재할 때 발생한다. 이 경우, git이 개입할 수 없어 병합 조건을 사용자에게 정하게 한다. <br> 조건은 아래와 같이 네 가지 경우의 수가 존재한다. <br> - income 분기(병합되어질)의 내용만 merge 한다. <br> - 병합대상 분기의 내용만 merge한다. <br> - 두 분기의 내용을 전부 포함시킨다. <br> - 추가요망<!-- TODO : 분기 내용 추가. --> |
 
 
 #### 사용법
@@ -256,24 +258,24 @@ $ git pull origin master
 위 내용을 표로 만들어 정리하면 다음과 같다.
 
 ​
-|상황|명령어|
-|--|--|
-|집에서 새로운 프로젝트 시작|`$ mkdir project`|
-|프로젝트 폴더로 이동|`$ cd project`|
-|리포 초기화|`$ git init`|
-|README, .gitignore 생성|`$ touch README.md .gitignore`|
-|파일 스테이징|`$ git add .`|
-|커밋|`$ git commit -m 'first commit'`|
-|원격저장소 생성|github 사이트에서 진행|
-|원격 저장소 등록|`$ git remote add origin <URL>`|
-|원격 저장소 PUSH|`$ git push origin master`|
-|다른 컴퓨터에서 원격저장소 복제|`$ git clone <URL>`|
-|작업|`add`, `commit`|
-|귀가 직전|`$ git push origin master`|
-|집 도착 이후|`$ git pull origin master`|
-|작업|`add`, `commit`|
-|작업 종료|`$ git push origin master`|
-|다른 컴퓨터에서 반복|`$ git pull origin master`|
+| 상황                            | 명령어                           |
+| ------------------------------- | -------------------------------- |
+| 집에서 새로운 프로젝트 시작     | `$ mkdir project`                |
+| 프로젝트 폴더로 이동            | `$ cd project`                   |
+| 리포 초기화                     | `$ git init`                     |
+| README, .gitignore 생성         | `$ touch README.md .gitignore`   |
+| 파일 스테이징                   | `$ git add .`                    |
+| 커밋                            | `$ git commit -m 'first commit'` |
+| 원격저장소 생성                 | github 사이트에서 진행           |
+| 원격 저장소 등록                | `$ git remote add origin <URL>`  |
+| 원격 저장소 PUSH                | `$ git push origin master`       |
+| 다른 컴퓨터에서 원격저장소 복제 | `$ git clone <URL>`              |
+| 작업                            | `add`, `commit`                  |
+| 귀가 직전                       | `$ git push origin master`       |
+| 집 도착 이후                    | `$ git pull origin master`       |
+| 작업                            | `add`, `commit`                  |
+| 작업 종료                       | `$ git push origin master`       |
+| 다른 컴퓨터에서 반복            | `$ git pull origin master`       |
 
 
 
