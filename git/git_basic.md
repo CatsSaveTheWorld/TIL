@@ -252,6 +252,53 @@ $ git clone https://github.com/CatSaveTheWorld/Daily_study.git
 $ git pull origin master
 ```
 
+### 원격저장소 커밋 기록 삭제
+원격저장소에 실수로 비밀번호나, 저작권에 걸리는 데이터 파일 등을 올렸을 때, 해당 파일만 지우고 다시 푸시하면 끝이 아니다. 깃허브에는 커밋 기록이 남아, 해당 파일을 다시 조회할 수 있기 때문이다.
+
+여기서는 원격저장소에 올라가버린 민감한 파일을 삭제하고, 히스토리까지 삭제하는 방법을 다룬다.
+
+#### .gitignore에 추가하기
+우선적으로 해당 파일을 .gitignore에 추가한다. 해당 파일의 확장자 전체를 추가하고 싶다면 `*.csv` 이런식으로 와일드카드(*)를 사용해서 추가하면 된다.
+
+.gitignore 추가 위치는 아무데나 해도 된다. 다만 구분하기 쉽게 위에 주석하나만 달아주자.
+
+**.gitignore에 추가하기**
+```
+# Data File
+*.csv
+*.parquet
+```
+
+#### 변경사항 github에 반영하기
+.gitignore에 추가하고 푸시한 후, 깃허브에 해당 파일이 삭제되었는지 확인한다. 만약, 깃허브에 파일이 건재하다면 캐시를 삭제하고 다시 커밋해보자.
+
+**캐시 삭제하기**
+```
+$ git rm -r --cached .
+$ git add .
+$ git commit -m "rm cache"
+$ git push origin master
+```
+
+#### Github history에서 삭제하기
+위까지 했다면 github에서는 해당 파일이 삭제된 걸 확인할 수 있을 것이다. 하지만, 깃허브에는 커밋기록이 존재한다. 따라서, 이 커밋기록까지 삭제해줘야 비로소 완성이라고 볼 수 있다.
+
+history까지 삭제하기 위해서는 아래의 명령을 실행한다. 여기서 주의할 점은 파일 경로이다. 파일 경로만 제대로 설정해도 대부분은 성공할 것이다.
+
+파일 경로의 기준은 당연하게도 현재 디렉토리(master 표시 왼쪽에 표시)가 기준이다.
+이를 기준으로 파일 경로를 설정해주면 된다.
+
+1. **커밋 기록 다시 쓰기**
+```
+git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch 경로/경로/파일명.확장자' --prune-empty --tag-name-filter cat -- --all
+```
+
+2. **성공했을 때**
+   1. `Ref 'refs/remotes/origin/master' was rewritten` 이렇게 뜬다.
+3. **실패했을 때**
+   1. `'C:/Users/TECH2_01/github/DACON_Airline_Delay/test.parquet' is outside repository at` 이런식으로 경로 밖에 있다고 뜬다.
+
+
 ## 정리
 위 내용을 표로 만들어 정리하면 다음과 같다.
 
